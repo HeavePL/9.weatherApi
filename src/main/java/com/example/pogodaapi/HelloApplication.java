@@ -13,7 +13,7 @@ public class HelloApplication extends Application {
 
 
         JSONURL jsonurl = new JSONURL("Kostrzyn");
-
+        System.out.println(jsonurl.getjOAll());
 
 
     }

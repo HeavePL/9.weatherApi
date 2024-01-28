@@ -10,17 +10,18 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 public class JSONURL {
+    private JSONObject jOAll;
+    private JSONObject main;
+    private int visibility;
+    private JSONObject wind;
+    private JSONObject rain;
+    private JSONObject snow;
+    private JSONObject clouds;
+    private String name;
+
     public JSONURL(String city){
         String keyAPI = "574868412a86f9e861f957ecc68a6807";
         String link = "https://api.openweathermap.org/data/2.5/weather?q="+city+"&appid="+keyAPI+"&lang=pl&units=metric";
-        JSONObject jOAll;
-        JSONObject main;
-        int visibility;
-        JSONObject wind;
-        JSONObject rain;
-        JSONObject snow;
-        JSONObject clouds;
-        String name;
         URL url = null;
         try {
             url = new URL(link);
@@ -49,19 +50,12 @@ public class JSONURL {
 
             while ((inputLine = in.readLine()) != null) {
                 response.append(inputLine);
+
             }
             in.close();
             String responseString = response.toString();
-            jOAll = new JSONObject(responseString);
-            main = jOAll.getJSONObject("main");
-            visibility = jOAll.getInt("visibility");
-            wind = jOAll.getJSONObject("wind");
-
-
-            rain = jOAll.getJSONObject("rain");
-            snow = jOAll.getJSONObject("snow");
-            clouds = jOAll.getJSONObject("clouds");
-            name = jOAll.getString("name");
+            // setting all data JSON
+            setjOAll(new JSONObject(responseString));
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -69,5 +63,80 @@ public class JSONURL {
             System.out.println("GET request did not work.");
         };
 
+        setMain(getjOAll().getJSONObject("main"));
+        setVisibility(getjOAll().getInt("visibility"));
+        setWind(getjOAll().getJSONObject("wind"));
+        if (getMain().has("rain")) {
+            setRain(getjOAll().getJSONObject("rain"));
+        }
+        if (getMain().has("snow")){
+            setSnow(getjOAll().getJSONObject("snow"));
+        }
+        setClouds(getjOAll().getJSONObject("clouds"));
+        setName(getjOAll().getString("name"));
+    }
+
+    public void setjOAll(JSONObject jOAll) {
+        this.jOAll = jOAll;
+    }
+
+    public JSONObject getjOAll() {
+        return jOAll;
+    }
+
+    public void setClouds(JSONObject clouds) {
+        this.clouds = clouds;
+    }
+
+    public JSONObject getClouds() {
+        return clouds;
+    }
+
+    public void setMain(JSONObject main) {
+        this.main = main;
+    }
+
+    public JSONObject getMain() {
+        return main;
+    }
+
+    public void setRain(JSONObject rain) {
+        this.rain = rain;
+    }
+
+    public JSONObject getRain() {
+        return rain;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setSnow(JSONObject snow) {
+        this.snow = snow;
+    }
+
+    public JSONObject getSnow() {
+        return snow;
+    }
+
+    public void setVisibility(int visibility) {
+        this.visibility = visibility;
+    }
+
+    public int getVisibility() {
+        return visibility;
+    }
+
+    public void setWind(JSONObject wind) {
+        this.wind = wind;
+    }
+
+    public JSONObject getWind() {
+        return wind;
     }
 }
