@@ -1,5 +1,7 @@
 package com.example.pogodaapi;
 
+import javafx.scene.image.Image;
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import javax.net.ssl.HttpsURLConnection;
@@ -18,7 +20,7 @@ public class JSONURL {
     private JSONObject snow;
     private JSONObject clouds;
     private String name;
-
+    private String icon;
     public JSONURL(String city){
         String keyAPI = "574868412a86f9e861f957ecc68a6807";
         String link = "https://api.openweathermap.org/data/2.5/weather?q="+city+"&appid="+keyAPI+"&lang=pl&units=metric";
@@ -62,14 +64,18 @@ public class JSONURL {
         } else {
             System.out.println("GET request did not work.");
         };
-
+        JSONArray weatherArray = getjOAll().getJSONArray("weather");
+        JSONObject weather = weatherArray.getJSONObject(0);
+        String iconString = weather.getString("icon");
+        String urlIcon = "https://openweathermap.org/img/wn/"+iconString+"@2x.png";
+        setIcon(urlIcon);
         setMain(getjOAll().getJSONObject("main"));
         setVisibility(getjOAll().getInt("visibility"));
         setWind(getjOAll().getJSONObject("wind"));
-        if (getMain().has("rain")) {
+        if (getjOAll().has("rain")) {
             setRain(getjOAll().getJSONObject("rain"));
         }
-        if (getMain().has("snow")){
+        if (getjOAll().has("snow")){
             setSnow(getjOAll().getJSONObject("snow"));
         }
         setClouds(getjOAll().getJSONObject("clouds"));
@@ -138,5 +144,13 @@ public class JSONURL {
 
     public JSONObject getWind() {
         return wind;
+    }
+
+    public void setIcon(String icon) {
+        this.icon = icon;
+    }
+
+    public String getIcon() {
+        return icon;
     }
 }
