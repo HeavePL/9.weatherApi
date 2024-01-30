@@ -21,6 +21,16 @@ public class JSONURL {
     private JSONObject clouds;
     private String name;
     private String icon;
+
+    public int getResponseCode() {
+        return responseCode;
+    }
+
+    public void setResponseCode(int responseCode) {
+        this.responseCode = responseCode;
+    }
+
+    private int responseCode;
     public JSONURL(String city){
         String keyAPI = "574868412a86f9e861f957ecc68a6807";
         String link = "https://api.openweathermap.org/data/2.5/weather?q="+city+"&appid="+keyAPI+"&lang=pl&units=metric";
@@ -42,6 +52,7 @@ public class JSONURL {
             throw new RuntimeException(e);
         }
         System.out.println("GET Response Code :: " + responseCode);
+        setResponseCode(responseCode);
         if (responseCode == HttpsURLConnection.HTTP_OK) {
             BufferedReader in = null;
             try {
@@ -63,6 +74,7 @@ public class JSONURL {
             }
         } else {
             System.out.println("GET request did not work.");
+            return;
         };
         JSONArray weatherArray = getjOAll().getJSONArray("weather");
         JSONObject weather = weatherArray.getJSONObject(0);
