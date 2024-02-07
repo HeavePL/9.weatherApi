@@ -1,6 +1,7 @@
 package com.example.pogodaapi;
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
@@ -33,8 +34,24 @@ public class HelloApplication extends Application {
         searchIV.setFitWidth(16);
         btnSubmit.setGraphic(searchIV);
         btnSubmit.setLayoutY(30);
-        btnSubmit.setLayoutX(200);
+        btnSubmit.setLayoutX(230);
+
         root.getChildren().add(btnSubmit);
+
+        Button btnClose = new Button();
+        Image close_icon = new Image("https://cdn0.iconfinder.com/data/icons/user-interface-2063/24/UI_Essential_icon_expanded-02-512.png");
+        ImageView closeIV = new ImageView(close_icon);
+        closeIV.setFitHeight(16);
+        closeIV.setFitWidth(16);
+        btnClose.setGraphic(closeIV);
+        btnClose.setLayoutY(30);
+        btnClose.setLayoutX(270);
+
+        root.getChildren().add(btnClose);
+
+        btnClose.setOnAction((ActionEvent event)->{
+            Platform.exit();
+        });
 
         Text main = new Text();
         main.setY(150);
@@ -57,12 +74,12 @@ public class HelloApplication extends Application {
                     JSONObject jsonMain = jsonurl.getMain();
                     String jsonRain;
                     if (jsonurl.getjOAll().has("rain")) {
-                        jsonRain = jsonurl.getRain().getString("1h") + "mm";
+                        jsonRain = jsonurl.getRain().get("1h") + "mm";
                     } else
                         jsonRain = "Brak opadow";
                     String jsonSnow;
                     if (jsonurl.getjOAll().has("Snow")) {
-                        jsonSnow = jsonurl.getSnow().getString("1h") + "mm";
+                        jsonSnow = jsonurl.getSnow().get("1h") + "mm";
                     } else
                         jsonSnow = "Brak opadow";
                     JSONObject wind = jsonurl.getWind();
@@ -92,7 +109,6 @@ public class HelloApplication extends Application {
 
                     root.getChildren().add(weatherIV);
                     root.getChildren().add(main);
-
                 }else {
                     root.getChildren().clear();
 
@@ -117,7 +133,7 @@ public class HelloApplication extends Application {
 
 
 
-        Scene scene = new Scene(root,300,600);
+        Scene scene = new Scene(root,400,600);
         stage.setScene(scene);
         stage.show();
 

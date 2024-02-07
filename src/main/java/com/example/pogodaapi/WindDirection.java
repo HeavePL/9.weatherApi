@@ -12,7 +12,7 @@ public class WindDirection {
     private String kierunek;
 
     public WindDirection(int deg) {
-        int kier = (int) Math.ceil((double) deg / 45);
+        int kier = (int) Math.round((double) deg / 45);
         // 0 45 90 135 180 225 270 315 360
         // 0  1  2   3   4   5   6   7   8
         // N NE E  SE  S   SW  W   NW   N
