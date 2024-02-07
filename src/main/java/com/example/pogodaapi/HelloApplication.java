@@ -109,6 +109,7 @@ public class HelloApplication extends Application {
 
                     root.getChildren().add(weatherIV);
                     root.getChildren().add(main);
+                    root.getChildren().add(btnClose);
                 }else {
                     root.getChildren().clear();
 
@@ -116,6 +117,7 @@ public class HelloApplication extends Application {
                     root.getChildren().add(btnSubmit);
                     main.setText("Wyszukanie nieudane,\n sprawdź nazwę miejscowości");
                     root.getChildren().add(main);
+                    root.getChildren().add(btnClose);
                 }
 
 
